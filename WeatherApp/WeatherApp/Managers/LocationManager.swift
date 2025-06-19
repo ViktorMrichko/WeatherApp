@@ -6,14 +6,25 @@
 //
 
 import CoreLocation
+import Combine
 
 @Observable
 final class LocationManager: NSObject {
     var cityName = "Defining location..."
     var errorDescription: String?
-    @ObservationIgnored private lazy var locationManager = CLLocationManager()
     
-    private func getCityName(from location: CLLocation, completion: @escaping (String?) -> Void) {
+    @ObservationIgnored
+    let locationManager = CLLocationManager()
+    
+    @ObservationIgnored
+    let currentLocation = PassthroughSubject<CLLocation, Never>()
+    
+    override init() {
+        super.init()
+        locationManager.delegate = self
+    }
+    
+    func getCityName(from location: CLLocation, completion: @escaping (String?) -> Void) {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location, preferredLocale: .current) { placemarks, error in
             guard let firstPlacemark = placemarks?.first, error == nil else {
@@ -27,17 +38,13 @@ final class LocationManager: NSObject {
 }
 
 extension LocationManager: CLLocationManagerDelegate {
-    func requestCurrentLocation() {
-        locationManager.delegate = self
-    }
-    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch locationManager.authorizationStatus {
         case .restricted, .denied:
             locationManager.requestWhenInUseAuthorization()
             errorDescription = "Location services are disabled"
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            locationManager.requestLocation()
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         default:
@@ -51,15 +58,18 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else {
-            cityName = "Undefined"
+            errorDescription = "Unable to determine location"
             return
         }
+        
+        currentLocation.send(location)
         
         getCityName(from: location) { [weak self] cityName in
             guard let self = self, let cityName = cityName else {
                 self?.errorDescription = "Unable to determine city"
                 return
             }
+            
             self.cityName = cityName
         }
     }
