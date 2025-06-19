@@ -11,6 +11,10 @@
 		4DF9214F2E040DC700AC2101 /* WeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF9214C2E040DC700AC2101 /* WeatherAppApp.swift */; };
 		4DF921502E040DC700AC2101 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DF9214A2E040DC700AC2101 /* Assets.xcassets */; };
 		4DF921542E040EF800AC2101 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF921532E040EF800AC2101 /* LocationManager.swift */; };
+		4DF921562E041C7F00AC2101 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF921552E041C7F00AC2101 /* NetworkManager.swift */; };
+		4DF921582E041EAB00AC2101 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF921572E041EAB00AC2101 /* WeatherModel.swift */; };
+		4DF9215A2E042AEE00AC2101 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF921592E042AEE00AC2101 /* MainViewModel.swift */; };
+		4DF9215C2E0465EC00AC2101 /* WeatherModelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF9215B2E0465EC00AC2101 /* WeatherModelDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		4DF9214B2E040DC700AC2101 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		4DF9214C2E040DC700AC2101 /* WeatherAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppApp.swift; sourceTree = "<group>"; };
 		4DF921532E040EF800AC2101 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		4DF921552E041C7F00AC2101 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		4DF921572E041EAB00AC2101 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		4DF921592E042AEE00AC2101 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		4DF9215B2E0465EC00AC2101 /* WeatherModelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModelDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				4DF921532E040EF800AC2101 /* LocationManager.swift */,
+				4DF921552E041C7F00AC2101 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -67,6 +76,8 @@
 		4DF921482E040DC700AC2101 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4DF921572E041EAB00AC2101 /* WeatherModel.swift */,
+				4DF9215B2E0465EC00AC2101 /* WeatherModelDTO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -74,6 +85,7 @@
 		4DF921492E040DC700AC2101 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				4DF921592E042AEE00AC2101 /* MainViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -171,9 +183,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DF921562E041C7F00AC2101 /* NetworkManager.swift in Sources */,
 				4DF9214E2E040DC700AC2101 /* MainView.swift in Sources */,
 				4DF9214F2E040DC700AC2101 /* WeatherAppApp.swift in Sources */,
 				4DF921542E040EF800AC2101 /* LocationManager.swift in Sources */,
+				4DF921582E041EAB00AC2101 /* WeatherModel.swift in Sources */,
+				4DF9215A2E042AEE00AC2101 /* MainViewModel.swift in Sources */,
+				4DF9215C2E0465EC00AC2101 /* WeatherModelDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
