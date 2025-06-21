@@ -9,9 +9,10 @@ import CoreLocation
 import Combine
 
 final class LocationManager: NSObject {
-    let locationManager = CLLocationManager()
     let currentLocation = PassthroughSubject<CLLocation, Never>()
     let errorMessage = PassthroughSubject<String?, Never>()
+    private let locationManager = CLLocationManager()
+    private let geocoder = CLGeocoder()
     
     override init() {
         super.init()
@@ -19,9 +20,8 @@ final class LocationManager: NSObject {
     }
     
     func getCityName(from location: CLLocation, completion: @escaping (String?) -> Void) {
-        let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location, preferredLocale: .current) { placemarks, error in
-            guard let firstPlacemark = placemarks?.first, error == nil else {
+            guard let firstPlacemark = placemarks?.first, error == nil else { 
                 self.errorMessage.send(error?.localizedDescription)
                 completion(nil)
                 return
@@ -31,7 +31,6 @@ final class LocationManager: NSObject {
     }
     
     func getLocation(from cityName: String, completion: @escaping (CLLocationCoordinate2D?) -> Void) {
-        let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(cityName) { placemarks, error in
             if let error = error {
                 self.errorMessage.send(error.localizedDescription)

@@ -8,12 +8,10 @@
 import Foundation
 
 struct WeatherModelDTO: Codable {
-    let latitude, longitude: Double
     let units: Units
     let days: Days
 
     enum CodingKeys: String, CodingKey {
-        case latitude, longitude
         case units = "daily_units"
         case days = "daily"
     }

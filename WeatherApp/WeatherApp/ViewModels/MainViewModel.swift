@@ -12,40 +12,48 @@ import CoreLocation
 @Observable
 class MainViewModel {
     var weatherData: [WeatherModel] = []
-    var cityName: String = ""
+    private(set) var cityName: String = ""
     var errorMessage: String?
     var isPresentedAlert = false 
     
     private let locationManager = LocationManager()
     private let networkManager = NetworkManager()
     private var cancellables: Set<AnyCancellable> = []
+    
+    init() {
+        getLocationErrors()
+    }
 
-    func getLocationAndFetchWeatherData() {
+    func getInitialWeatherData() {
         locationManager.currentLocation
             .first()
-            .sink { coordinates in
-                self.fetchWeatherData(coordinates: coordinates.coordinate)
-                self.locationManager.getCityName(from: coordinates, completion: { determinedCityName in
-                    guard let determinedCityName = determinedCityName else { return }
-                    self.cityName = determinedCityName
-                })
+            .sink { location in
+                self.fetchWeatherData(for: location.coordinate)
+                self.determineCityName(for: location)
             }
             .store(in: &cancellables)
-            
-        getLocationErrors()
     }
     
     func getWeatherForecast(for cityName: String) {
-        locationManager.getLocation(from: cityName) { coordinates in
-            guard let coordinates = coordinates else { return }
-            self.weatherData = []
-            self.fetchWeatherData(coordinates: coordinates)
+        locationManager.getLocation(from: cityName) { location in
+            guard let location = location else {
+                self.errorMessage = "Failed to find city"
+                return
+            }
+            
+            self.fetchWeatherData(for: location, and: cityName)
         }
+    }
+    
+    private func determineCityName(for location: CLLocation) {
+        self.locationManager.getCityName(from: location, completion: { determinedCityName in
+            guard let determinedCityName = determinedCityName else { return }
+            self.cityName = determinedCityName
+        })
     }
     
     private func getLocationErrors() {
         locationManager.errorMessage
-            .first()
             .sink { error in
                 self.errorMessage = error
                 self.isPresentedAlert = true
@@ -53,30 +61,34 @@ class MainViewModel {
             .store(in: &cancellables)
     }
     
-
-    private func fetchWeatherData(coordinates: CLLocationCoordinate2D) {
-        networkManager.download(coordinates: coordinates)
+    private func fetchWeatherData(for coordinates: CLLocationCoordinate2D, and cityName: String? = nil) {
+        networkManager.downloadWeather(for: coordinates)
             .decode(type: WeatherModelDTO.self, decoder: JSONDecoder())
             .sink(receiveCompletion: { result in
                 switch result {
                 case .failure(let error):
-                    self.showError(errorMessage: error.localizedDescription)
+                    self.showError(message: error.localizedDescription)
                 case .finished:
                     break
                 }
             }, receiveValue: { [weak self] weatherDTO in
                 guard let self else { return }
-                weatherModelDTOToWeatherModel(weatherDTO)
+                
+                self.weatherData = []
+                if let cityName = cityName {
+                    self.cityName = cityName
+                }
+                mapToWeatherModel(from: weatherDTO)
             })
             .store(in: &cancellables)
     }
     
-    private func showError(errorMessage: String) {
+    private func showError(message: String) {
         self.errorMessage = errorMessage
         isPresentedAlert = true
     }
     
-    private func weatherModelDTOToWeatherModel(_ weatherModelDTO: WeatherModelDTO) {
+    private func mapToWeatherModel(from weatherModelDTO: WeatherModelDTO) {
         let count = min(
             weatherModelDTO.days.time.count,
             weatherModelDTO.days.temperatureMax.count,

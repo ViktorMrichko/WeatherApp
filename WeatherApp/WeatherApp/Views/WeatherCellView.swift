@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct WeatherCellView: View {
-    @Binding var isChangeCityAlertShown: Bool
     private let weather: WeatherModel
     private let cityName: String
     
-    init(isChangeCityAlertShown: Binding<Bool>, weather: WeatherModel, cityName: String) {
-        self._isChangeCityAlertShown = isChangeCityAlertShown
+    init(weather: WeatherModel, cityName: String) {
         self.weather = weather
         self.cityName = cityName
     }
@@ -35,19 +33,9 @@ struct WeatherCellView: View {
 
 private extension WeatherCellView {
     var cityNameSection: some View {
-        HStack {
-            Text("\(cityName)")
-                .font(.system(size: 35, weight: .heavy))
-            
-            Button {
-                isChangeCityAlertShown = true
-            } label: {
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundStyle(.black)
-            }
-        }
+        Text("\(cityName)")
+            .font(.system(size: 35, weight: .heavy))
+            .padding(.bottom)
     }
     
     var date: some View {
@@ -55,26 +43,42 @@ private extension WeatherCellView {
             Text(dayOfWeek(from: weather.time) ?? "")
             Text(formatDate(weather.time) ?? "")
         }
-    }
-    
-    var rainProbability: some View {
-        Text("Rain probability: \(weather.precipitationProbability)%")
+        .font(.system(size: 20, weight: .medium))
     }
     
     var temperature: some View {
-        HStack {
+        VStack {
             Text("\(weather.temperatureMax)°C")
-                .foregroundStyle(.red)
-            Text("|")
-            Text("\(weather.temperatureMin)°C")
-                .foregroundStyle(.blue)
+                .font(.system(size: 75, weight: .bold))
+            HStack {
+                Text("\(weather.temperatureMax)°C")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(.red)
+                Text("|")
+                Text("\(weather.temperatureMin)°C")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(.blue)
+            }
         }
+        .padding(.bottom)
+        
     }
     
     var weatherIcon: some View {
         getWeatherIcon()
             .resizable()
             .frame(width: 150, height: 150)
+            .padding(.vertical)
+    }
+    
+    var rainProbability: some View {
+        HStack{
+            Text("Rain probability: ")
+            Text("\(weather.precipitationProbability)%")
+                .foregroundStyle(.blue)
+        }
+        .font(.system(size: 20, weight: .medium))
+        .padding(.vertical)
     }
     
     func dayOfWeek(from dateString: String, format: String = "yyyy-MM-dd") -> String? {
@@ -110,5 +114,5 @@ private extension WeatherCellView {
 }
 
 #Preview {
-    WeatherCellView(isChangeCityAlertShown: .constant(true), weather: WeatherModel(time: "2025-06-20", temperatureMax: 25, temperatureMin: 17, precipitationProbability: 44), cityName: "Kyiv")
+    WeatherCellView(weather: WeatherModel(time: "2025-06-20", temperatureMax: 25, temperatureMin: 17, precipitationProbability: 44), cityName: "Kyiv")
 }

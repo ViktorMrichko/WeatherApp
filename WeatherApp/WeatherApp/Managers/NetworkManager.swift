@@ -9,12 +9,12 @@ import CoreLocation
 import Combine
 
 struct NetworkManager {
-    enum NetworkingError: LocalizedError {
+    private enum NetworkingError: LocalizedError { 
         case badURLResponse(url: URL)
         case errorURL
     }
     
-    func download(coordinates: CLLocationCoordinate2D) -> AnyPublisher<Data, Error> {
+    func downloadWeather(for coordinates: CLLocationCoordinate2D) -> AnyPublisher<Data, Error> {
         guard let url = URL(string: "https://api.open-meteo.com/v1/forecast?latitude=\(coordinates.latitude)&longitude=\(coordinates.longitude)&daily=temperature_2m_max,precipitation_probability_max,temperature_2m_min&forecast_days=16")
         else {
             return Fail(error: NetworkingError.errorURL)
