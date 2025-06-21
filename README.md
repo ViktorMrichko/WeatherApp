@@ -13,4 +13,5 @@ Used following API to get weather forecast on 16 days:\
 https://open-meteo.com/en/docs?hourly=&forecast_days=16&daily=temperature_2m_max,precipitation_probability_max,temperature_2m_min&latitude=50.4547&longitude=30.5238
 
 Screenshot:\
-![WeatherAppScreenshot](https://github.com/user-attachments/assets/200f2a02-e8cf-4b5e-b207-81e83e7abcb1)
+![WeatherAppScreenshot](https://github.com/user-attachments/assets/c24c70f0-d9b8-4724-9c6b-f02360c11a9b)
+
