@@ -1,7 +1,7 @@
 # WeatherApp
 **General:**
 - Device Type: iPhone
-- Minimum Deployment Target: iOS 17.0
+- Minimum Deployment Target: iOS 18.0
 - Swift Version: Swift 6
 - Dark Mode: Disabled
 - Device Orientation: Portrait
