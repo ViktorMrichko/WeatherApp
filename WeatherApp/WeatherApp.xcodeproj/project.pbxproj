@@ -15,6 +15,7 @@
 		4DF921582E041EAB00AC2101 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF921572E041EAB00AC2101 /* WeatherModel.swift */; };
 		4DF9215A2E042AEE00AC2101 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF921592E042AEE00AC2101 /* MainViewModel.swift */; };
 		4DF9215C2E0465EC00AC2101 /* WeatherModelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF9215B2E0465EC00AC2101 /* WeatherModelDTO.swift */; };
+		4DF9215E2E05622700AC2101 /* WeatherCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF9215D2E05622700AC2101 /* WeatherCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		4DF921572E041EAB00AC2101 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		4DF921592E042AEE00AC2101 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4DF9215B2E0465EC00AC2101 /* WeatherModelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModelDTO.swift; sourceTree = "<group>"; };
+		4DF9215D2E05622700AC2101 /* WeatherCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				4DF9214B2E040DC700AC2101 /* MainView.swift */,
+				4DF9215D2E05622700AC2101 /* WeatherCellView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				4DF921562E041C7F00AC2101 /* NetworkManager.swift in Sources */,
 				4DF9214E2E040DC700AC2101 /* MainView.swift in Sources */,
 				4DF9214F2E040DC700AC2101 /* WeatherAppApp.swift in Sources */,
+				4DF9215E2E05622700AC2101 /* WeatherCellView.swift in Sources */,
 				4DF921542E040EF800AC2101 /* LocationManager.swift in Sources */,
 				4DF921582E041EAB00AC2101 /* WeatherModel.swift in Sources */,
 				4DF9215A2E042AEE00AC2101 /* MainViewModel.swift in Sources */,

@@ -5,20 +5,26 @@
 //  Created by Viktor Mrichko on 19.06.2025.
 //
 
-import Foundation
+import CoreLocation
 import Combine
 
 struct NetworkManager {
     enum NetworkingError: LocalizedError {
         case badURLResponse(url: URL)
-        case unknown
+        case errorURL
     }
     
-    func download(url: URL) -> AnyPublisher<Data, Error> {
-        URLSession.shared.dataTaskPublisher(for: url)
-            .subscribe(on: DispatchQueue.global(qos: .default), options: nil)
+    func download(coordinates: CLLocationCoordinate2D) -> AnyPublisher<Data, Error> {
+        guard let url = URL(string: "https://api.open-meteo.com/v1/forecast?latitude=\(coordinates.latitude)&longitude=\(coordinates.longitude)&daily=temperature_2m_max,precipitation_probability_max,temperature_2m_min&forecast_days=16")
+        else {
+            return Fail(error: NetworkingError.errorURL)
+                .eraseToAnyPublisher()
+        }
+        
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: DispatchQueue.global(qos: .default))
             .tryMap({ try handleURLResponse(output: $0, url: url) })
-            .receive(on: DispatchQueue.main, options: nil)
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     

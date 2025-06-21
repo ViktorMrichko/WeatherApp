@@ -21,12 +21,14 @@ struct WeatherModelDTO: Codable {
 
 struct Days: Codable {
     let time: [String]
-    let temperature: [Double]
+    let temperatureMax: [Double]
+    let temperatureMin: [Double]
     let precipitationProbability: [Int]
 
     enum CodingKeys: String, CodingKey {
         case time
-        case temperature = "temperature_2m_max"
+        case temperatureMax = "temperature_2m_max"
+        case temperatureMin = "temperature_2m_min"
         case precipitationProbability = "precipitation_probability_max"
     }
 }

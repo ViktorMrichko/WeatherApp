@@ -11,7 +11,7 @@ import SwiftUI
 struct WeatherAppApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView(mainViewModel: .init(networkManager: .init(), locationManager: .init()))
+            MainView()
         }
     }
 }
