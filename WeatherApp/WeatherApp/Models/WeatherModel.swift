@@ -9,6 +9,7 @@ import Foundation
 
 struct WeatherModel: Hashable {
     let time: String
-    let temperature: Int
+    let temperatureMax: Int
+    let temperatureMin: Int
     let precipitationProbability: Int
 }
