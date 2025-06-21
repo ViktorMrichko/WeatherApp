@@ -37,6 +37,17 @@ private extension MainView {
     var searchCityButton: some View {
         VStack {
             HStack {
+                Button {
+                    if let coordinates = viewModel.location?.coordinate {
+                        viewModel.fetchWeatherData(for: coordinates, and: viewModel.initialCityName)
+                    }
+                } label: {
+                    Image(systemName: "location")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundStyle(.black)
+                }
+                
                 Spacer()
                 Button {
                     isSearchDialogShown

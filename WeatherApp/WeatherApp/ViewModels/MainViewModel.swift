@@ -12,7 +12,9 @@ import CoreLocation
 @Observable
 class MainViewModel {
     var weatherData: [WeatherModel] = []
-    private(set) var cityName: String = ""
+    private(set) var cityName = ""
+    private(set) var location: CLLocation?
+    private(set) var initialCityName = ""
     var errorMessage: String?
     var isPresentedAlert = false 
     
@@ -30,6 +32,7 @@ class MainViewModel {
             .sink { location in
                 self.fetchWeatherData(for: location.coordinate)
                 self.determineCityName(for: location)
+                self.location = location
             }
             .store(in: &cancellables)
     }
@@ -49,6 +52,9 @@ class MainViewModel {
         self.locationManager.getCityName(from: location, completion: { determinedCityName in
             guard let determinedCityName = determinedCityName else { return }
             self.cityName = determinedCityName
+            if self.initialCityName.isEmpty {
+                self.initialCityName = determinedCityName
+            }
         })
     }
     
@@ -61,7 +67,7 @@ class MainViewModel {
             .store(in: &cancellables)
     }
     
-    private func fetchWeatherData(for coordinates: CLLocationCoordinate2D, and cityName: String? = nil) {
+    func fetchWeatherData(for coordinates: CLLocationCoordinate2D, and cityName: String? = nil) {
         networkManager.downloadWeather(for: coordinates)
             .decode(type: WeatherModelDTO.self, decoder: JSONDecoder())
             .sink(receiveCompletion: { result in
